@@ -10,15 +10,12 @@
         $(document).ready(function () {
             contactDetailsList();
         });
-        // Handle click event on Update button
         function updateClick() {
         }
-        // Handle click event on Add button
         function addClick() {
         }
 
         function contactDetailsList() {
-            // Call Web API to get a list of Product
             $.ajax({
                 url: '/api/ContactDetails/GetAll',
                 type: 'GET',
@@ -33,20 +30,16 @@
         }
 
         function contactListSuccess(ContactDetails) {
-            // Iterate over the collection of data
             $.each(ContactDetails, function (index, contact) {
-                // Add a row to the Product table
                 contactAddRow(contact);
             });
         }
 
         function contactAddRow(contacts) {
-            // Check if <tbody> tag exists, add one if not
             if ($("#ContactTable tbody").length == 0) {
                 $("#ContactTable").append("<tbody></tbody>");
 
             }
-            // Append row to <table>
             $("#ContactTable tbody").append(
                 contactBuildTableRow(contacts));
         }
