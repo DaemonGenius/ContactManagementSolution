@@ -8,7 +8,7 @@ function addClick() {
 
 function contactDetailsList() {
     $.ajax({
-        url: '/api/ContactDetails/GetAll',
+        url: '/api/ContactDetails/',
         type: 'GET',
         dataType: 'json',
         success: function (ContactDetails) {
@@ -27,7 +27,7 @@ function contactListSuccess(ContactDetails) {
 }
 
 function contactAddRow(contacts) {
-    if ($("#ContactTable tbody").length == 0) {
+    if ($("#ContactTable tbody").length === 0) {
         $("#ContactTable").append("<tbody></tbody>");
 
     }
@@ -81,7 +81,7 @@ function handleException(request, message,
     var msg = "";
     msg += "Code: " + request.status + "\n";
     msg += "Text: " + request.statusText + "\n";
-    if (request.responseJSON != null) {
+    if (request.responseJSON !== null) {
         msg += "Message" +
             request.responseJSON.Message + "\n";
     }
@@ -92,19 +92,22 @@ function addClick() {
     Contact.FName = $("#fname").val();
     Contact.LName = $("#lName").val();
     Contact.PhoneNumber = $("#cNum").val();
-    
-    var x, phoneno = /^\d{10}$/;
+    //Validation
+    //Check if Fname & Lname is empty
+    //Check CellNumber only numerical numbers
+    //Check If cNum is a valid CellNumber with a reggex
+    var x, num = /^\d{10}$/;
     x = Contact.PhoneNumber;
-    if (Contact.FName != "" && Contact.LName != "") {
-        if (isNaN(x) || x < 0 || x == "") {
+    if (Contact.FName !== "" && Contact.LName !== "") {
+        if (isNaN(x) || x < 0 || x === "") {
             alert("Error Please Fill in correct Number");
         } else {
-            if (x.match(phoneno)) {
-                if ($("#updateButton").text().trim() ==
+            if (x.match(num)) {
+                if ($("#updateButton").text().trim() ===
                     "Add") {
                     ContactAdd(Contact);
                     formClear();
-                } else if ($("#updateButton").text().trim() ==
+                } else if ($("#updateButton").text().trim() ===
                     "Update") {
                     Contact.ID = $("#contactId").val();
                     contactUpdate(Contact);
@@ -166,6 +169,7 @@ function formClear() {
     $("#cNum").val("");
 }
 function contactToFields(contact) {
+   
     $("#fname").val(contact.FName);
     $("#lName").val(contact.LName);
     $("#cNum").val(contact.PhoneNumber);
@@ -175,11 +179,12 @@ function contactGet(ctl) {
     var id = $(ctl).data("id");
     $("#contactId").val(id);
     $.ajax({
-        url: "/api/ContactDetails/" + id,
+        url: "/api/ContactDetails/" +id,
         type: 'GET',
         dataType: 'json',
         success: function (contact) {
             contactToFields(contact);
+          
             $("#updateButton").text("Update");
         },
         error: function (request, message, error) {
