@@ -136,6 +136,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Global.asax" />
     <Content Include="Index.html" />
+    <Content Include="src\js\somejslogic.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

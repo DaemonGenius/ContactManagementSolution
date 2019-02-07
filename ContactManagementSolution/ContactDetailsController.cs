@@ -103,32 +103,32 @@ namespace ContactManagementSolution.Controller
             }
             return true;
         }
+        [HttpDelete()]
+        public bool Delete(int id)
+        {
+            string oString = "Delete from ContactDetails where ID=@id";
+            using (connect.GetConnection())
+            {
 
-        //public bool Delete(string contact)
-        //{
-        //    string oString = "Delete from ContactDetails where FName=@FName";
-        //    using (connect.GetConnection())
-        //    {
+                using (SqlCommand cmd = new SqlCommand(oString, connect.GetConnection()))
+                {
+                    cmd.CommandType = System.Data.CommandType.Text;
+                    cmd.Parameters.AddWithValue("@ID", id);
 
-        //        using (SqlCommand cmd = new SqlCommand(oString, connect.GetConnection()))
-        //        {
-        //            cmd.CommandType = System.Data.CommandType.Text;
-        //            cmd.Parameters.AddWithValue("@FName", contact);
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                    catch (Exception)
+                    {
 
-        //            try
-        //            {
-        //                cmd.ExecuteNonQuery();
-        //            }
-        //            catch (Exception)
-        //            {
+                        throw;
+                    }
 
-        //                throw;
-        //            }
-
-        //        }
-        //    }
-        //    return true;
-        //}
+                }
+            }
+            return true;
+        }
 
         //public List<ContactDetails> SortAlp()
         //{
