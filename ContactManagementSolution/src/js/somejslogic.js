@@ -175,6 +175,24 @@ function contactToFields(contact) {
     $("#cNum").val(contact.PhoneNumber);
 }
 
+function SearchClick() {
+    var name;
+    name = $("#fname").val();
+    $.ajax({
+        url: "/api/ContactDetails/" + name,
+        type: 'GET',
+        dataType: 'json',
+        success: function (contact) {
+            contactToFields(contact);
+        },
+
+        error: function (request, message, error) {
+            handleException(request, message, error);
+            alert("Not found");
+        }
+    });
+}
+
 function contactGet(ctl) {
     var id = $(ctl).data("id");
     $("#contactId").val(id);
@@ -183,8 +201,7 @@ function contactGet(ctl) {
         type: 'GET',
         dataType: 'json',
         success: function (contact) {
-            contactToFields(contact);
-          
+            contactToFields(contact);          
             $("#updateButton").text("Update");
         },
         error: function (request, message, error) {

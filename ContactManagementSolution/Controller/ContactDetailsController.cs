@@ -131,6 +131,32 @@ namespace ContactManagementSolution.Controller
         }
 
         [HttpGet()]
+        public IHttpActionResult GetContact(string name)
+        {
+            ContactDetails contact = new ContactDetails();
+            using (connect.GetConnection())
+            {
+                string oString = "Select * FROM ContactDetails Where FName='" + name + "'";
+                SqlCommand oCmd = new SqlCommand(oString, connect.GetConnection());
+                using (SqlDataReader oReader = oCmd.ExecuteReader())
+                {
+
+                    while (oReader.Read())
+                    {
+                        contact.ID = Convert.ToInt32(oReader["ID"]);
+                        contact.FName = oReader["FName"].ToString();
+                        contact.LName = oReader["LName"].ToString();
+                        contact.PhoneNumber = oReader["CellNumber"].ToString();
+
+                    }
+
+                }
+
+            }
+            return Ok(contact);
+        }
+
+        [HttpGet()]
         public IHttpActionResult Get(int id)
         {
             ContactDetails contact = new ContactDetails();
